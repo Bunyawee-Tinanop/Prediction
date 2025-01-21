@@ -1,0 +1,52 @@
+body {
+    background-color: #f0f8ff; /* สีพื้นหลังของหน้าเป็นฟ้าอ่อน */
+    font-family: 'Charm', cursive; /* ใช้ฟอนต์ Charm */
+}
+
+.container {
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #ffffff; /* สีพื้นหลังของกล่องเป็นสีขาว */
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* เงาที่นุ่มนวล */
+}
+
+h1 {
+    color: #6c63ff; /* สีม่วงอ่อน */
+    font-size: 2.5rem; /* ขนาดฟอนต์เพิ่มขึ้น */
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+label {
+    font-weight: 600; /* ทำให้ข้อความใน label หนาขึ้น */
+    font-size: 1.1rem; /* ขนาดฟอนต์เพิ่มขึ้นเล็กน้อย */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-pastel {
+    width: 100%;
+    font-size: 1.2rem;
+    background-color: #ff6f61; /* สีส้มพาสเทล */
+    border: none; /* ไม่มีกรอบ */
+    border-radius: 5px; /* มุมของปุ่มโค้ง */
+    padding: 10px; /* เพิ่มระยะห่างภายในปุ่ม */
+    transition: background-color 0.3s; /* เพิ่มการเปลี่ยนแปลงสีเมื่อโฮเวอร์ */
+}
+
+.btn-pastel:hover {
+    background-color: #ff4a3a; /* สีเมื่อเลื่อนเมาส์ไปที่ปุ่ม */
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.5rem; /* ขนาดฟอนต์เพิ่มขึ้น */
+    text-align: center;
+    color: #28a745; /* เปลี่ยนสีข้อความผลลัพธ์เป็นสีเขียว */
+    font-weight: bold; /* ทำให้ข้อความในผลลัพธ์หนาขึ้น */
+}

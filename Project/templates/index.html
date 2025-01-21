@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ทำนายความเสี่ยงต่อการเป็นโรคหลอดเลือดสมอง</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-color: #f9c2c2; /* พื้นหลังเบา ๆ ของหน้า */
+        }
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #ffffff; /* สีพื้นหลังของกล่อง */
+            border-radius: 10px; /* มุมกล่องโค้ง */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* เงาที่นุ่มนวล */
+        }
+        h1 {
+            color: #6c63ff; /* สีม่วงอ่อนสำหรับหัวข้อ */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .btn-group {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">ทำนายความเสี่ยงต่อการเป็นโรคหลอดเลือดสมอง</h1>
+
+        <form action="/predict" method="POST" id="prediction-form" class="needs-validation" novalidate>
+
+            <div class="form-group row">
+                <label for="age" class="col-sm-3 col-form-label">อายุ:</label>
+                <div class="col-sm-9">
+                    <input type="number" id="age" name="age" class="form-control" required>
+                    <div class="invalid-feedback">กรุณากรอกอายุที่ถูกต้อง.</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="hypertension" class="col-sm-3 col-form-label">ภาวะความดันโลหิตสูง:</label>
+                <div class="col-sm-9">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="hypertension" value="0" class="form-check-input" required>
+                        <label class="form-check-label">ไม่มี</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="hypertension" value="1" class="form-check-input" required>
+                        <label class="form-check-label">มี</label>
+                    </div>
+                    <div class="invalid-feedback">กรุณาเลือกภาวะความดันโลหิตสูง.</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="heart_disease" class="col-sm-3 col-form-label">โรคหัวใจ:</label>
+                <div class="col-sm-9">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="heart_disease" value="0" class="form-check-input" required>
+                        <label class="form-check-label">ไม่มี</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="heart_disease" value="1" class="form-check-input" required>
+                        <label class="form-check-label">มี</label>
+                    </div>
+                    <div class="invalid-feedback">กรุณาเลือกโรคหัวใจ.</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="avg_glucose_level" class="col-sm-3 col-form-label">ระดับน้ำตาลเฉลี่ยในเลือด:</label>
+                <div class="col-sm-9">
+                    <input type="number" id="avg_glucose_level" name="avg_glucose_level" step="0.01" class="form-control" required>
+                    <div class="invalid-feedback">กรุณากรอกระดับน้ำตาลเฉลี่ยในเลือดที่ถูกต้อง.</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-pastel">ทำนาย</button>
+        </form>
+
+        <div id="result" class="result"></div>
+
+        <!-- ปุ่มสำหรับดูชุดข้อมูล -->
+        <div class="btn-group d-flex justify-content-center mt-4">
+            <a href="/full-data" class="btn btn-info mr-2">ดูชุดข้อมูลทั้งหมด</a>
+            <a href="/prediction-history" class="btn btn-warning">ดูประวัติการทำนาย</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let formData = {
+                age: document.getElementById('age').value,
+                hypertension: document.querySelector('input[name="hypertension"]:checked').value,
+                heart_disease: document.querySelector('input[name="heart_disease"]:checked').value,
+                avg_glucose_level: document.getElementById('avg_glucose_level').value,
+            };
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                let predictionMessage = data.prediction === 1 ? 
+                    'มีความเสี่ยงต่อการเป็นโรคหลอดเลือดสมอง' : 
+                    'ไม่มีความเสี่ยงต่อการเป็นโรคหลอดเลือดสมอง';
+                document.getElementById('result').innerHTML = predictionMessage;
+            });
+        });
+    </script>
+</body>
+</html>
