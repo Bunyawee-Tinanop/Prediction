@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroke Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stroke Prediction</h1>
+        <form action="/predict" method="POST">
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender" required>
+                <option value="0">Female</option>
+                <option value="1">Male</option>
+            </select>
+
+            <label for="age">Age:</label>
+            <input type="number" step="0.1" name="age" id="age" required>
+
+            <label for="hypertension">Hypertension:</label>
+            <select name="hypertension" id="hypertension" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+
+            <label for="heart_disease">Heart Disease:</label>
+            <select name="heart_disease" id="heart_disease" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+
+            <label for="married">Married:</label>
+            <select name="married" id="married" required>
+                <option value="0">Not Married</option>
+                <option value="1">Married</option>
+            </select>
+
+            <label for="avg_glucose_level">Average Glucose Level:</label>
+            <input type="number" step="0.1" name="avg_glucose_level" id="avg_glucose_level" required>
+
+            <label for="bmi">BMI:</label>
+            <input type="number" step="0.1" name="bmi" id="bmi" required>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <p>The predicted result is: {{ result }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
